@@ -103,7 +103,7 @@ trait ConversationUtils
     protected function startConversation(): void
     {
         $this->setConversation(new Conversation ($this->getTelegramUser()->getId(), $this->getChatId(),
-            self::getCommandName()));
+            static::getCommandName()));
     }
 
     /**

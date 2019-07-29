@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.1] - 2019-07-29
+### Fixed
+- Fixed a bug.
+
 ## [1.1.0] - 2019-07-29
 ### Changed
 - ConversationUtils::getName() method renamed to static method ConversationUtils::getCommandName() for the compatibility with other packages.
