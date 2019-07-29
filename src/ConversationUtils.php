@@ -8,8 +8,20 @@ use Longman\TelegramBot\Exception\TelegramException;
 
 trait ConversationUtils
 {
+    /**
+     * Get command name.
+     * @return string
+     */
+    abstract public static function getCommandName(): string;
+
+    /**
+     * @return Conversation|null
+     */
     abstract protected function getConversation(): ?Conversation;
 
+    /**
+     * @param Conversation|null $_new_conversation_state
+     */
     abstract protected function setConversation(?Conversation $_new_conversation_state): void;
 
     /**
@@ -27,12 +39,6 @@ trait ConversationUtils
      * @return int
      */
     abstract protected function getChatId(): int;
-
-    /**
-     * Get command name.
-     * @return string
-     */
-    abstract public function getName(): string;
 
     /**
      * @param string $_new_state
@@ -97,7 +103,7 @@ trait ConversationUtils
     protected function startConversation(): void
     {
         $this->setConversation(new Conversation ($this->getTelegramUser()->getId(), $this->getChatId(),
-            $this->getName()));
+            self::getCommandName()));
     }
 
     /**
