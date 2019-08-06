@@ -11,6 +11,7 @@
     ],
     "require": {
         "php": "^7.2",
+        "myclabs/php-enum": "~1.5",
         "longman/telegram-bot": "~0.59",
         "californiamountainsnake/php-simple-telegram-api": "~1.2.0"
     },

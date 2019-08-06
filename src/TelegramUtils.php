@@ -2,6 +2,7 @@
 
 namespace CaliforniaMountainSnake\LongmanTelegrambotUtils;
 
+use CaliforniaMountainSnake\LongmanTelegrambotUtils\Enums\TelegramChatTypeEnum;
 use Longman\TelegramBot\Entities\Chat;
 use Longman\TelegramBot\Entities\Message;
 use Longman\TelegramBot\Entities\Update;
@@ -91,5 +92,26 @@ trait TelegramUtils
     protected function getChatId(): int
     {
         return $this->chatId;
+    }
+
+    /**
+     * @return TelegramChatTypeEnum
+     */
+    protected function getChatType(): TelegramChatTypeEnum
+    {
+        if ($this->chat->isPrivateChat()) {
+            return TelegramChatTypeEnum::PRIVATE_CHAT();
+        }
+        if ($this->chat->isGroupChat()) {
+            return TelegramChatTypeEnum::GROUP_CHAT();
+        }
+        if ($this->chat->isSuperGroup()) {
+            return TelegramChatTypeEnum::SUPERGROUP_CHAT();
+        }
+        if ($this->chat->isChannel()) {
+            return TelegramChatTypeEnum::CHANNEL();
+        }
+
+        throw new \RuntimeException('Unknown telegram chat type!');
     }
 }
