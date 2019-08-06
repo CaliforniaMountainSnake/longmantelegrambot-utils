@@ -2,6 +2,7 @@
 
 namespace CaliforniaMountainSnake\LongmanTelegrambotUtils;
 
+use Longman\TelegramBot\Entities\Chat;
 use Longman\TelegramBot\Entities\Message;
 use Longman\TelegramBot\Entities\Update;
 use Longman\TelegramBot\Entities\User;
@@ -23,6 +24,11 @@ trait TelegramUtils
      * @var User
      */
     protected $telegramUser;
+
+    /**
+     * @var Chat
+     */
+    protected $chat;
 
     /**
      * Текущий id чата.
@@ -53,20 +59,35 @@ trait TelegramUtils
         $callback_query = $this->getUpdate()->getCallbackQuery();
         if ($this->message !== null) {
             $this->telegramUser = $this->message->getFrom();
-            $this->chatId       = $this->message->getChat()->getId();
+            $this->chat         = $this->message->getChat();
             $this->text         = $this->message->getText(true) ?? '';
         } elseif ($callback_query) {
             $this->telegramUser = $callback_query->getFrom();
-            $this->chatId       = $callback_query->getMessage()->getChat()->getId();
+            $this->chat         = $callback_query->getMessage()->getChat();
             $this->text         = $callback_query->getData() ?? '';
         }
+        $this->chatId = $this->chat->getId();
     }
 
+    /**
+     * @return User
+     */
     protected function getTelegramUser(): User
     {
         return $this->telegramUser;
     }
 
+    /**
+     * @return Chat
+     */
+    public function getChat(): Chat
+    {
+        return $this->chat;
+    }
+
+    /**
+     * @return int
+     */
     protected function getChatId(): int
     {
         return $this->chatId;
