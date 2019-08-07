@@ -33,6 +33,14 @@ trait SendUtils
     }
 
     /**
+     * @return ServerResponse
+     */
+    protected function emptyResponse(): ServerResponse
+    {
+        return Request::emptyResponse();
+    }
+
+    /**
      * Use this method to send text messages. On success, the sent Message is returned.
      *
      * @param string $_text

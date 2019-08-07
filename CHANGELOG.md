@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.5] - 2019-08-07
+### Added
+- Added the SendUtils::emptyResponse() method.
+
 ## [1.1.4] - 2019-08-07
 ### Added
 - Added the possibility to specify the chat_id and parse_mode in all SendUtils's methods.
