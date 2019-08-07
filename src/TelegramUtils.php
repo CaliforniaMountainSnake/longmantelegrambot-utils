@@ -33,7 +33,7 @@ trait TelegramUtils
 
     /**
      * Текущий id чата.
-     * @var int
+     * @var string
      */
     protected $chatId;
 
@@ -87,9 +87,9 @@ trait TelegramUtils
     }
 
     /**
-     * @return int
+     * @return string
      */
-    protected function getChatId(): int
+    protected function getChatId(): string
     {
         return $this->chatId;
     }

@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.4] - 2019-08-07
+### Added
+- Added the possibility to specify the chat_id and parse_mode in all SendUtils's methods.
+- Added the SendUtils::getDefaultParseMode() method.
+- Added the ConversationUtils::getNotes() method.
+### Changed
+- !The return type hint of the TelegramUtils::getChatId has been changed from int to string.
+
 ## [1.1.3] - 2019-08-06
 ### Added
 - Added the method TelegramUtils::getChatType().

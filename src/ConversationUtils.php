@@ -36,9 +36,9 @@ trait ConversationUtils
     abstract protected function getTelegramUser(): User;
 
     /**
-     * @return int
+     * @return string
      */
-    abstract protected function getChatId(): int;
+    abstract protected function getChatId(): string;
 
     /**
      * @param string $_new_state
@@ -95,6 +95,15 @@ trait ConversationUtils
     protected function getNote(string $_note)
     {
         return ($this->getConversation()->notes[$_note] ?? null);
+    }
+
+    /**
+     * Get all conversation's notes.
+     * @return array
+     */
+    protected function getNotes(): array
+    {
+        return $this->getConversation()->notes;
     }
 
     /**

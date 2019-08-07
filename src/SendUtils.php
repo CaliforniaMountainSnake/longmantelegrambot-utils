@@ -14,30 +14,47 @@ use Longman\TelegramBot\Request;
  */
 trait SendUtils
 {
-    abstract protected function getChatId(): int;
+    /**
+     * @return string
+     */
+    abstract protected function getChatId(): string;
 
+    /**
+     * @return Conversation|null
+     */
     abstract protected function getConversation(): ?Conversation;
 
     /**
-     * Отослать текстовое сообщение.
-     * (Режим парсинга: HTML).
+     * @return ParseModeEnum
+     */
+    protected function getDefaultParseMode(): ParseModeEnum
+    {
+        return ParseModeEnum::HTML();
+    }
+
+    /**
+     * Use this method to send text messages. On success, the sent Message is returned.
      *
-     * @param string $_msg Текст сообщения.
+     * @param string $_text
      * @param array|null $_errors
-     * @param Keyboard|null $_reply_markup Клавиатура. Не обязательно.
+     * @param Keyboard|null $_reply_markup
+     * @param string|null $_chat_id
+     * @param ParseModeEnum|null $_parse_mode
      *
      * @return ServerResponse                  Ответ Telegram.
      * @throws TelegramException
      */
     protected function sendTextMessage(
-        string $_msg,
+        string $_text,
         ?array $_errors = null,
-        ?Keyboard $_reply_markup = null
+        ?Keyboard $_reply_markup = null,
+        ?string $_chat_id = null,
+        ?ParseModeEnum $_parse_mode = null
     ): ServerResponse {
         $data = [
-            'chat_id' => $this->getChatId(),
-            'parse_mode' => (string)ParseModeEnum::HTML(),
-            'text' => $this->getValidationErrorsString($_errors) . $_msg,
+            'chat_id' => $_chat_id ?? $this->getChatId(),
+            'parse_mode' => (string)($_parse_mode ?? $this->getDefaultParseMode()),
+            'text' => $this->getValidationErrorsString($_errors) . $_text,
         ];
 
         if ($_reply_markup !== null) {
@@ -54,17 +71,22 @@ trait SendUtils
      * @param string $_caption
      * @param string $_filename
      * @param Keyboard|null $_reply_markup
+     * @param string|null $_chat_id
+     * @param ParseModeEnum|null $_parse_mode
+     *
      * @return ServerResponse
      * @throws TelegramException
      */
     protected function sendDocument(
         string $_caption,
         string $_filename,
-        ?Keyboard $_reply_markup = null
+        ?Keyboard $_reply_markup = null,
+        ?string $_chat_id = null,
+        ?ParseModeEnum $_parse_mode = null
     ): ServerResponse {
         $data = [
-            'chat_id' => $this->getChatId(),
-            'parse_mode' => (string)ParseModeEnum::HTML(),
+            'chat_id' => $_chat_id ?? $this->getChatId(),
+            'parse_mode' => (string)($_parse_mode ?? $this->getDefaultParseMode()),
             'caption' => $_caption,
             'document' => Request::encodeFile($_filename),
         ];
@@ -76,35 +98,24 @@ trait SendUtils
         return Request::sendDocument($data);
     }
 
-
-    /**
-     * Получить объект клавиатуры, пригодный для отправки Telegram.
-     *
-     * @param   array $_keyboard Массив клавиатуры.
-     *
-     * @return  Keyboard                Объект клавиатуры.
-     */
-    protected function getKeyboardObject(array $_keyboard): Keyboard
-    {
-        $keyboard = new Keyboard (...$_keyboard);
-        $keyboard->setResizeKeyboard(true)
-            ->setOneTimeKeyboard(true)
-            ->setSelective(false);
-        return $keyboard;
-    }
-
     /**
      * Remove the keyboard.
      *
      * @param string $_text
+     * @param string|null $_chat_id
+     * @param ParseModeEnum|null $_parse_mode
+     *
      * @return ServerResponse
      * @throws TelegramException
      */
-    protected function removeKeyboard(string $_text): ServerResponse
-    {
+    protected function removeKeyboard(
+        string $_text,
+        ?string $_chat_id = null,
+        ?ParseModeEnum $_parse_mode = null
+    ): ServerResponse {
         $params = [
-            'chat_id' => $this->getChatId(),
-            'parse_mode' => (string)ParseModeEnum::HTML(),
+            'chat_id' => $_chat_id ?? $this->getChatId(),
+            'parse_mode' => (string)($_parse_mode ?? $this->getDefaultParseMode()),
             'reply_markup' => Keyboard::remove(['selective' => true]),
             'text' => $_text
         ];
@@ -113,23 +124,27 @@ trait SendUtils
     }
 
     /**
+     * @param string|null $_chat_id
      * @return ServerResponse
      * @throws TelegramException
      */
-    protected function forceRemoveKeyboard(): ServerResponse
+    protected function forceRemoveKeyboard(?string $_chat_id = null): ServerResponse
     {
-        $response = $this->removeKeyboard('Delete keyboard');
-        return $this->deleteMessage($response->getResult()->getMessageId());
+        $chatId   = $_chat_id ?? $this->getChatId();
+        $response = $this->removeKeyboard('Delete keyboard', $chatId);
+        return $this->deleteMessage($response->getResult()->getMessageId(), $chatId);
     }
 
     /**
      * @param $_object
+     * @param string|null $_chat_id
      * @return ServerResponse
      * @throws TelegramException
      */
-    protected function sendVarExportDebugMessage($_object): ServerResponse
+    protected function sendVarExportDebugMessage($_object, string $_chat_id = null): ServerResponse
     {
-        return $this->sendTextMessage(\var_export($_object, true));
+        $chatId = $_chat_id ?? $this->getChatId();
+        return $this->sendTextMessage(\var_export($_object, true), null, null, $chatId);
     }
 
     /**
@@ -141,16 +156,21 @@ trait SendUtils
      * @param string $_message_id
      * @param string $_text
      * @param Keyboard|null $_reply_markup
+     * @param string|null $_chat_id
+     * @param ParseModeEnum|null $_parse_mode
+     *
      * @return ServerResponse
      */
     protected function editMessageText(
         string $_message_id,
         string $_text,
-        ?Keyboard $_reply_markup = null
+        ?Keyboard $_reply_markup = null,
+        ?string $_chat_id = null,
+        ?ParseModeEnum $_parse_mode = null
     ): ServerResponse {
         $params = [
-            'chat_id' => $this->getChatId(),
-            'parse_mode' => (string)ParseModeEnum::HTML(),
+            'chat_id' => $_chat_id ?? $this->getChatId(),
+            'parse_mode' => (string)($_parse_mode ?? $this->getDefaultParseMode()),
             'message_id' => $_message_id,
             'text' => $_text
         ];
@@ -164,26 +184,44 @@ trait SendUtils
 
     /**
      * @param string $_message_id
+     * @param string|null $_chat_id
+     *
      * @return ServerResponse
      */
-    protected function deleteMessage(string $_message_id): ServerResponse
+    protected function deleteMessage(string $_message_id, ?string $_chat_id = null): ServerResponse
     {
         return Request::deleteMessage([
-            'chat_id' => $this->getChatId(),
+            'chat_id' => $_chat_id ?? $this->getChatId(),
             'message_id' => $_message_id,
         ]);
     }
 
     /**
+     * @param string|null $_chat_id
      * @return ServerResponse
      */
-    protected function sendTypingAction(): ServerResponse
+    protected function sendTypingAction(?string $_chat_id = null): ServerResponse
     {
         // Send typing action.
         return Request::sendChatAction([
-            'chat_id' => $this->getChatId(),
+            'chat_id' => $_chat_id ?? $this->getChatId(),
             'action' => 'typing',
         ]);
+    }
+
+    /**
+     * Получить объект клавиатуры, пригодный для отправки Telegram.
+     *
+     * @param array $_keyboard Массив клавиатуры.
+     * @return Keyboard Объект клавиатуры.
+     */
+    protected function getKeyboardObject(array $_keyboard): Keyboard
+    {
+        $keyboard = new Keyboard (...$_keyboard);
+        $keyboard->setResizeKeyboard(true)
+            ->setOneTimeKeyboard(true)
+            ->setSelective(false);
+        return $keyboard;
     }
 
     //------------------------------------------------------------------------------------------------------------------
