@@ -107,6 +107,15 @@ trait ConversationUtils
     }
 
     /**
+     * Return the current conversation's state value.
+     * @return mixed|null
+     */
+    protected function getState()
+    {
+        return $this->getNote($this->getStateNoteName());
+    }
+
+    /**
      * @throws TelegramException
      */
     protected function startConversation(): void
