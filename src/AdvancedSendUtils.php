@@ -15,7 +15,7 @@ trait AdvancedSendUtils
     /**
      * Send a text message or edit the existed one.
      *
-     * @param string             $_unique_message_name
+     * @param string             $_unique_conversation_note
      * @param string             $_text
      * @param array|null         $_errors
      * @param Keyboard|null      $_reply_markup
@@ -26,20 +26,19 @@ trait AdvancedSendUtils
      * @throws TelegramException
      */
     protected function showTextMessage(
-        string $_unique_message_name,
+        string $_unique_conversation_note,
         string $_text,
         ?array $_errors = null,
         ?Keyboard $_reply_markup = null,
         ?string $_chat_id = null,
         ?ParseModeEnum $_parse_mode = null
     ): ServerResponse {
-        $messageIdNote = $_unique_message_name . '_msg_id';
-        $messageId = $this->getNote($messageIdNote);
+        $messageId = $this->getNote($_unique_conversation_note);
 
         // Send message.
         if ($messageId === null) {
             $msg = $this->sendTextMessage($_text, $_errors, $_reply_markup, $_chat_id, $_parse_mode);
-            $this->setConversationNotes([$messageIdNote => $msg->getResult()->getMessageId()]);
+            $this->setConversationNotes([$_unique_conversation_note => $msg->getResult()->getMessageId()]);
             return $msg;
         }
 

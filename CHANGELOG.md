@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.9] - 2019-08-25
+### Changed
+- Some improvement of the AdvancedSendUtils::showTextMessage().
+
 ## [1.1.8] - 2019-08-25
 ### Fixed
 - Fix the bug with namespace of AdvancedSendUtils.
