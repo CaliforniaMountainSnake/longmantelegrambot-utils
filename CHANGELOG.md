@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.8] - 2019-08-25
+### Fixed
+- Fix the bug with namespace of AdvancedSendUtils.
+
 ## [1.1.7] - 2019-08-25
 ### Added
 - Added the AdvancedSendUtils trait with showTextMessage() method allows send a message once and edit one later.

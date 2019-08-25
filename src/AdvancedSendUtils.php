@@ -1,9 +1,7 @@
 <?php
 
-namespace CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\InlineButton;
+namespace CaliforniaMountainSnake\LongmanTelegrambotUtils;
 
-use CaliforniaMountainSnake\LongmanTelegrambotUtils\ConversationUtils;
-use CaliforniaMountainSnake\LongmanTelegrambotUtils\SendUtils;
 use CaliforniaMountainSnake\SocialNetworksAPI\Telegram\ParseModeEnum;
 use Longman\TelegramBot\Entities\Keyboard;
 use Longman\TelegramBot\Entities\ServerResponse;
