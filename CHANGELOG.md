@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.7] - 2019-08-25
+### Added
+- Added the AdvancedSendUtils trait with showTextMessage() method allows send a message once and edit one later.
+### Changed
+- !!! SendUtils::editMessageText signature has been changed. It takes now the errors parameter as sendTextMessage().
+- Changed formatting of all classes.
+
 ## [1.1.6] - 2019-08-07
 ### Added
 - Added the ConversationUtils::getState() method.

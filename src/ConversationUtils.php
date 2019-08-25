@@ -10,6 +10,7 @@ trait ConversationUtils
 {
     /**
      * Get command name.
+     *
      * @return string
      */
     abstract public static function getCommandName(): string;
@@ -26,6 +27,7 @@ trait ConversationUtils
 
     /**
      * Идентификатор текущего состояния conversation.
+     *
      * @return string
      */
     abstract protected function getStateNoteName(): string;
@@ -99,6 +101,7 @@ trait ConversationUtils
 
     /**
      * Get all conversation's notes.
+     *
      * @return array
      */
     protected function getNotes(): array
@@ -108,6 +111,7 @@ trait ConversationUtils
 
     /**
      * Return the current conversation's state value.
+     *
      * @return mixed|null
      */
     protected function getState()

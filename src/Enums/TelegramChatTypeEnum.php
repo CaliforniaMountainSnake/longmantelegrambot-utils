@@ -9,10 +9,10 @@ use MyCLabs\Enum\Enum;
  */
 class TelegramChatTypeEnum extends Enum
 {
-    public const PRIVATE_CHAT    = 'private';
-    public const GROUP_CHAT      = 'group';
+    public const PRIVATE_CHAT = 'private';
+    public const GROUP_CHAT = 'group';
     public const SUPERGROUP_CHAT = 'supergroup';
-    public const CHANNEL         = 'channel';
+    public const CHANNEL = 'channel';
 
     //--------------------------------------------------------------------------
     // These methods are just for IDE autocomplete and not are mandatory.

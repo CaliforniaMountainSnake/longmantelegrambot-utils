@@ -43,10 +43,10 @@ trait SendUtils
     /**
      * Use this method to send text messages. On success, the sent Message is returned.
      *
-     * @param string $_text
-     * @param array|null $_errors
-     * @param Keyboard|null $_reply_markup
-     * @param string|null $_chat_id
+     * @param string             $_text
+     * @param array|null         $_errors
+     * @param Keyboard|null      $_reply_markup
+     * @param string|null        $_chat_id
      * @param ParseModeEnum|null $_parse_mode
      *
      * @return ServerResponse                  Ответ Telegram.
@@ -76,10 +76,10 @@ trait SendUtils
      * Отослать документ.
      * (Режим парсинга: HTML).
      *
-     * @param string $_caption
-     * @param string $_filename
-     * @param Keyboard|null $_reply_markup
-     * @param string|null $_chat_id
+     * @param string             $_caption
+     * @param string             $_filename
+     * @param Keyboard|null      $_reply_markup
+     * @param string|null        $_chat_id
      * @param ParseModeEnum|null $_parse_mode
      *
      * @return ServerResponse
@@ -109,8 +109,8 @@ trait SendUtils
     /**
      * Remove the keyboard.
      *
-     * @param string $_text
-     * @param string|null $_chat_id
+     * @param string             $_text
+     * @param string|null        $_chat_id
      * @param ParseModeEnum|null $_parse_mode
      *
      * @return ServerResponse
@@ -133,19 +133,21 @@ trait SendUtils
 
     /**
      * @param string|null $_chat_id
+     *
      * @return ServerResponse
      * @throws TelegramException
      */
     protected function forceRemoveKeyboard(?string $_chat_id = null): ServerResponse
     {
-        $chatId   = $_chat_id ?? $this->getChatId();
+        $chatId = $_chat_id ?? $this->getChatId();
         $response = $this->removeKeyboard('Delete keyboard', $chatId);
         return $this->deleteMessage($response->getResult()->getMessageId(), $chatId);
     }
 
     /**
-     * @param $_object
+     * @param             $_object
      * @param string|null $_chat_id
+     *
      * @return ServerResponse
      * @throws TelegramException
      */
@@ -161,10 +163,11 @@ trait SendUtils
      * The official telegram docs say:
      * Please note, that it is currently only possible to edit messages without reply_markup or with inline keyboards.
      *
-     * @param string $_message_id
-     * @param string $_text
-     * @param Keyboard|null $_reply_markup
-     * @param string|null $_chat_id
+     * @param string             $_message_id
+     * @param string             $_text
+     * @param array|null         $_errors
+     * @param Keyboard|null      $_reply_markup
+     * @param string|null        $_chat_id
      * @param ParseModeEnum|null $_parse_mode
      *
      * @return ServerResponse
@@ -172,6 +175,7 @@ trait SendUtils
     protected function editMessageText(
         string $_message_id,
         string $_text,
+        ?array $_errors = null,
         ?Keyboard $_reply_markup = null,
         ?string $_chat_id = null,
         ?ParseModeEnum $_parse_mode = null
@@ -180,7 +184,7 @@ trait SendUtils
             'chat_id' => $_chat_id ?? $this->getChatId(),
             'parse_mode' => (string)($_parse_mode ?? $this->getDefaultParseMode()),
             'message_id' => $_message_id,
-            'text' => $_text
+            'text' => $this->getValidationErrorsString($_errors) . $_text,
         ];
 
         if ($_reply_markup !== null) {
@@ -191,7 +195,7 @@ trait SendUtils
     }
 
     /**
-     * @param string $_message_id
+     * @param string      $_message_id
      * @param string|null $_chat_id
      *
      * @return ServerResponse
@@ -206,6 +210,7 @@ trait SendUtils
 
     /**
      * @param string|null $_chat_id
+     *
      * @return ServerResponse
      */
     protected function sendTypingAction(?string $_chat_id = null): ServerResponse
@@ -221,6 +226,7 @@ trait SendUtils
      * Получить объект клавиатуры, пригодный для отправки Telegram.
      *
      * @param array $_keyboard Массив клавиатуры.
+     *
      * @return Keyboard Объект клавиатуры.
      */
     protected function getKeyboardObject(array $_keyboard): Keyboard
@@ -236,6 +242,7 @@ trait SendUtils
 
     /**
      * @param array|null $_errors Массив с ошибками, любой размерности.
+     *
      * @return string Результирующая строка с ошибками.
      */
     private function getValidationErrorsString(?array $_errors): string

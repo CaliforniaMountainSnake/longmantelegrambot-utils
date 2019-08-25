@@ -16,12 +16,14 @@ trait TelegramUtils
 {
     /**
      * Текущее сообщение.
+     *
      * @var Message|null
      */
     protected $message;
 
     /**
      * От кого получено текущее сообщение.
+     *
      * @var User
      */
     protected $telegramUser;
@@ -33,12 +35,14 @@ trait TelegramUtils
 
     /**
      * Текущий id чата.
+     *
      * @var string
      */
     protected $chatId;
 
     /**
      * Текущий текст. (without cmd).
+     *
      * @var string
      */
     protected $text;
@@ -56,16 +60,16 @@ trait TelegramUtils
 
     protected function initTelegramParams(): void
     {
-        $this->message  = $this->getTelegramMessage();
+        $this->message = $this->getTelegramMessage();
         $callback_query = $this->getUpdate()->getCallbackQuery();
         if ($this->message !== null) {
             $this->telegramUser = $this->message->getFrom();
-            $this->chat         = $this->message->getChat();
-            $this->text         = $this->message->getText(true) ?? '';
+            $this->chat = $this->message->getChat();
+            $this->text = $this->message->getText(true) ?? '';
         } elseif ($callback_query) {
             $this->telegramUser = $callback_query->getFrom();
-            $this->chat         = $callback_query->getMessage()->getChat();
-            $this->text         = $callback_query->getData() ?? '';
+            $this->chat = $callback_query->getMessage()->getChat();
+            $this->text = $callback_query->getData() ?? '';
         }
         $this->chatId = $this->chat->getId();
     }
