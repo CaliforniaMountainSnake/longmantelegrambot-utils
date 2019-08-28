@@ -2,7 +2,7 @@
 
 namespace CaliforniaMountainSnake\LongmanTelegrambotUtils;
 
-use CaliforniaMountainSnake\SocialNetworksAPI\Telegram\ParseModeEnum;
+use CaliforniaMountainSnake\SocialNetworksAPI\Telegram\Enums\ParseModeEnum;
 use Longman\TelegramBot\Entities\Keyboard;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
