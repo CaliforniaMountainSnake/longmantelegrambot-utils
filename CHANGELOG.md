@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.11] - 2019-08-28
+### Added
+- Added TelegramFileUtils trait allows easily download files from Telegram.
+- Added TelegramMessageTypeEnum contains all types of telegram messages supported by longman/telegram-bot library.
+
 ## [1.1.10] - 2019-08-28
 ### Changed
 - The library californiamountainsnake/php-simple-telegram-api has been updated to the version ~2.0.0.
