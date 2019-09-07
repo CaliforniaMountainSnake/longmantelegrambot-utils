@@ -43,6 +43,16 @@ trait ConversationUtils
     abstract protected function getChatId(): string;
 
     /**
+     * @throws \RuntimeException
+     */
+    protected function assertConversationIsStarted(): void
+    {
+        if ($this->getConversation() === null) {
+            throw new \RuntimeException('You must start a conversation before!');
+        }
+    }
+
+    /**
      * @param string $_new_state
      *
      * @throws TelegramException

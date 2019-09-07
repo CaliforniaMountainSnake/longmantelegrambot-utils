@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "549f6fe54c8b0ae8cbae7ac0a03062ab",
+    "content-hash": "555af381fe61dddbef753fca59080cc5",
     "packages": [
         {
             "name": "californiamountainsnake/php-simple-telegram-api",
-            "version": "2.0.0",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CaliforniaMountainSnake/php-simple-telegram-api.git",
-                "reference": "3cabb0c29a56dbfbf59f649c0f79f7bf3c8c22d6"
+                "reference": "e64543a15c2fc9f856363adff6623907a6a20763"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CaliforniaMountainSnake/php-simple-telegram-api/zipball/3cabb0c29a56dbfbf59f649c0f79f7bf3c8c22d6",
-                "reference": "3cabb0c29a56dbfbf59f649c0f79f7bf3c8c22d6",
+                "url": "https://api.github.com/repos/CaliforniaMountainSnake/php-simple-telegram-api/zipball/e64543a15c2fc9f856363adff6623907a6a20763",
+                "reference": "e64543a15c2fc9f856363adff6623907a6a20763",
                 "shasum": ""
             },
             "require": {
@@ -49,20 +49,20 @@
                 }
             ],
             "description": "Php realisation of SOME methods of Telegram BOT API.",
-            "time": "2019-08-28T07:34:39+00:00"
+            "time": "2019-09-07T08:51:19+00:00"
         },
         {
             "name": "californiamountainsnake/php-utils",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CaliforniaMountainSnake/php-utils.git",
-                "reference": "c4d0533144a186e59b2136dfda4a9b7148625d86"
+                "reference": "6a5260a73a2afe1926855a0e38904aa735a2aed5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CaliforniaMountainSnake/php-utils/zipball/c4d0533144a186e59b2136dfda4a9b7148625d86",
-                "reference": "c4d0533144a186e59b2136dfda4a9b7148625d86",
+                "url": "https://api.github.com/repos/CaliforniaMountainSnake/php-utils/zipball/6a5260a73a2afe1926855a0e38904aa735a2aed5",
+                "reference": "6a5260a73a2afe1926855a0e38904aa735a2aed5",
                 "shasum": ""
             },
             "require": {
@@ -93,7 +93,7 @@
                 }
             ],
             "description": "The set of useful php traits",
-            "time": "2019-08-27T09:44:16+00:00"
+            "time": "2019-08-28T09:26:02+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -344,16 +344,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.24.0",
+            "version": "1.25.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266"
+                "reference": "70e65a5470a42cfec1a7da00d30edb6e617e8dcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266",
-                "reference": "bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/70e65a5470a42cfec1a7da00d30edb6e617e8dcf",
+                "reference": "70e65a5470a42cfec1a7da00d30edb6e617e8dcf",
                 "shasum": ""
             },
             "require": {
@@ -418,7 +418,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2018-11-05T09:00:11+00:00"
+            "time": "2019-09-06T13:49:17+00:00"
         },
         {
             "name": "myclabs/php-enum",

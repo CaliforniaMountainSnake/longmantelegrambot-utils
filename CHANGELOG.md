@@ -11,6 +11,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.12] - 2019-09-07
+### Added
+- Added the Mediafile class represents the files that can be edited with editMessageMedia().
+- Added the ConversationUtils::assertConversationIsStarted() method.
+- Added the SendUtils::sendMediafile() method.
+- Added the SendUtils::editMessageMedia() method.
+- Added the AdvancedSendUtils::convertServerResponseToTelegramResponse() method.
+- Added the AdvancedSendUtils::showAnyMessage() method that allows to show ANY types of messages, including the messages with media files.
+### Changed
+- SendUtils::sendVarExportDebugMessage() allows to set an object description now.
+- SendUtils::getValidationErrorsString() is protected now.
+- SendUtils::sendDocument() is deprecated now.
+- AdvancedSendUtils::showTextMessage() is deprecated now.
+- Updated the composer dependencies.
+
 ## [1.1.11] - 2019-08-28
 ### Added
 - Added TelegramFileUtils trait allows easily download files from Telegram.
