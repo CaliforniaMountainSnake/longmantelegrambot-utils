@@ -127,7 +127,7 @@ trait SendUtils
         ];
 
         $_mediafile->getCaption() !== null && $params['caption'] = $_mediafile->getCaption();
-        $_reply_markup !== null && $data['reply_markup'] = $_reply_markup;
+        $_reply_markup !== null && $params['reply_markup'] = $_reply_markup;
 
         return Request::send('send' . \ucfirst($type), $params);
     }
