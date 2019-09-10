@@ -143,7 +143,7 @@ trait AdvancedSendUtils
      *
      * @return string[]|null[] [msg_id, msg_type]
      */
-    private function getPrevMsgData(string $_unique_msg_token): array
+    protected function getPrevMsgData(string $_unique_msg_token): array
     {
         $notePreviousMsgId = $_unique_msg_token . '_prev_msg_id';
         $notePreviousMsgType = $_unique_msg_token . '_prev_msg_type';
@@ -152,6 +152,23 @@ trait AdvancedSendUtils
             $this->getNote($notePreviousMsgType),
         ];
     }
+
+    /**
+     * @param string $_unique_msg_token
+     *
+     * @throws TelegramException
+     */
+    protected function deletePrevMsgData(string $_unique_msg_token): void
+    {
+        $notePreviousMsgId = $_unique_msg_token . '_prev_msg_id';
+        $notePreviousMsgType = $_unique_msg_token . '_prev_msg_type';
+        $this->setConversationNotes([
+            $notePreviousMsgId => null,
+            $notePreviousMsgType => null,
+        ]);
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     /**
      * @param string         $_unique_msg_token

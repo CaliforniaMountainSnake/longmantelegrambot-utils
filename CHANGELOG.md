@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.14] - 2019-09-10
+### Added
+- Added the method AdvancedSendUtils::deletePrevMsgData().
+
 ## [1.1.13] - 2019-09-07
 ### Fixed
 - Fix a bug with SendUtils::sendMediafile()'s reply_markup.
