@@ -120,7 +120,7 @@ trait ConversationUtils
     protected function getNote(string $_note)
     {
         $value = ($this->getConversation()->notes[$_note] ?? null);
-        $this->getConversationLogger()->debug('Conversation note "' . $_note . '" returned', $value);
+        $this->getConversationLogger()->debug('Conversation note returned', [$_note => $value]);
         return $value;
     }
 
@@ -132,7 +132,7 @@ trait ConversationUtils
     protected function getNotes(): array
     {
         $values = $this->getConversation()->notes;
-        $this->getConversationLogger()->debug('All conversation notes returned', $values);
+        $this->getConversationLogger()->debug('All conversation notes returned', $values ?? []);
         return $values;
     }
 

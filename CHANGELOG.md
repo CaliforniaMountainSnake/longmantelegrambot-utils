@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.17] - 2019-11-02
+### Fixed
+- Fixed a small bug in the ConversationUtils.
+
 ## [1.1.16] - 2019-11-02
 ### Changed
 - Logging of ConversationUtils have been optimized.
