@@ -13,7 +13,8 @@
         "php": "^7.2",
         "myclabs/php-enum": "~1.5",
         "longman/telegram-bot": "~0.59",
-        "californiamountainsnake/php-simple-telegram-api": "~2.0.4"
+        "californiamountainsnake/php-simple-telegram-api": "~2.0.4",
+        "psr/log": "^1.1"
     },
     "require-dev": {
         "ext-dom": "*",

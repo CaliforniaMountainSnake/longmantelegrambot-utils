@@ -6,7 +6,11 @@ use Longman\TelegramBot\Conversation;
 use Longman\TelegramBot\Entities\User;
 use Longman\TelegramBot\Exception\TelegramException;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
+/**
+ * Utils intended for the comfortable manipulating of the Conversation object.
+ */
 trait ConversationUtils
 {
     /**
@@ -86,9 +90,7 @@ trait ConversationUtils
         }
         $this->getConversation()->update();
 
-        if ($this->conversationLogger !== null) {
-            $this->conversationLogger->debug('Conversation notes have been set', $_notes_arr);
-        }
+        $this->getConversationLogger()->info('Conversation notes have been set', $_notes_arr);
     }
 
     /**
@@ -105,22 +107,21 @@ trait ConversationUtils
         }
         $this->getConversation()->update();
 
-        if ($this->conversationLogger !== null) {
-            $this->conversationLogger->debug('Conversation notes have been deleted', $_note_keys_arr);
-        }
+        $this->getConversationLogger()->info('Conversation notes have been deleted', $_note_keys_arr);
     }
 
     /**
-     * Вернуть значение переменной conversation->notes.
-     * Алиас для более быстрого обращения.
+     * Get conversation note's value.
      *
-     * @param string $_note Ключ массива notes.
+     * @param string $_note The key of the conversation->notes array.
      *
-     * @return mixed|null Значение переменной или null, если она не существует.
+     * @return mixed|null The value of a variable or null if it does not exists.
      */
     protected function getNote(string $_note)
     {
-        return ($this->getConversation()->notes[$_note] ?? null);
+        $value = ($this->getConversation()->notes[$_note] ?? null);
+        $this->getConversationLogger()->debug('Conversation note "' . $_note . '" returned', $value);
+        return $value;
     }
 
     /**
@@ -130,7 +131,9 @@ trait ConversationUtils
      */
     protected function getNotes(): array
     {
-        return $this->getConversation()->notes;
+        $values = $this->getConversation()->notes;
+        $this->getConversationLogger()->debug('All conversation notes returned', $values);
+        return $values;
     }
 
     /**
@@ -151,9 +154,7 @@ trait ConversationUtils
         $conversationParams = [$this->getTelegramUser()->getId(), $this->getChatId(), static::getCommandName()];
         $this->setConversation(new Conversation (...$conversationParams));
 
-        if ($this->conversationLogger !== null) {
-            $this->conversationLogger->debug('Conversation has been started', $conversationParams);
-        }
+        $this->getConversationLogger()->info('Conversation has been started', $conversationParams);
     }
 
     /**
@@ -164,11 +165,10 @@ trait ConversationUtils
         if ($this->getConversation() !== null) {
             $this->getConversation()->stop();
         }
-
-        if ($this->conversationLogger !== null) {
-            $this->conversationLogger->debug('Conversation has been stopped');
-        }
+        $this->getConversationLogger()->info('Conversation has been stopped');
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     /**
      * @param LoggerInterface $_logger
@@ -176,5 +176,16 @@ trait ConversationUtils
     public function setConversationLogger(LoggerInterface $_logger): void
     {
         $this->conversationLogger = $_logger;
+    }
+
+    /**
+     * @return LoggerInterface
+     */
+    public function getConversationLogger(): LoggerInterface
+    {
+        if ($this->conversationLogger === null) {
+            $this->conversationLogger = new NullLogger();
+        }
+        return $this->conversationLogger;
     }
 }

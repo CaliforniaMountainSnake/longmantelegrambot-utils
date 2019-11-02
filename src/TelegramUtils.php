@@ -9,20 +9,20 @@ use Longman\TelegramBot\Entities\Update;
 use Longman\TelegramBot\Entities\User;
 
 /**
- * Трейт позволяет получить основные telegram-параметры, как в контексте обычной команды,
- * так и в контексте CallbackqueryCommand.
+ * This trait let you to get main Telegram params both in the context of the regular bot command
+ * and in the context of the CallbackqueryCommand.
  */
 trait TelegramUtils
 {
     /**
-     * Текущее сообщение.
+     * Current message.
      *
      * @var Message|null
      */
     protected $message;
 
     /**
-     * От кого получено текущее сообщение.
+     * The person from which has been received current message.
      *
      * @var User
      */
@@ -34,14 +34,14 @@ trait TelegramUtils
     protected $chat;
 
     /**
-     * Текущий id чата.
+     * Current chat id.
      *
      * @var string
      */
     protected $chatId;
 
     /**
-     * Текущий текст. (without cmd).
+     * Current text. (without cmd).
      *
      * @var string
      */

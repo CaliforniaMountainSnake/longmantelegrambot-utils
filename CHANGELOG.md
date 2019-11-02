@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.16] - 2019-11-02
+### Changed
+- Logging of ConversationUtils have been optimized.
+- The translation of the comments have been improved.
+
 ## [1.1.15] - 2019-11-02
 ### Added
 - Added the possibility to set a Psr\Log\LoggerInterface object for ConversationUtils.

@@ -8,6 +8,9 @@ use Longman\TelegramBot\Entities\Message;
 use Longman\TelegramBot\Exception\TelegramException;
 use Longman\TelegramBot\Request;
 
+/**
+ * This trait let you to download files from Telegram.
+ */
 trait TelegramFileUtils
 {
     /**

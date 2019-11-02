@@ -10,12 +10,19 @@ use Longman\TelegramBot\Entities\Keyboard;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
 use Longman\TelegramBot\Request;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
- * Утилиты для удобной отправки сообщений в чат Telegram.
+ * Utils intended for the comfortable sending messages to Telegram chats.
  */
 trait SendUtils
 {
+    /**
+     * @var LoggerInterface
+     */
+    protected $sendUtilsLogger;
+
     /**
      * @return string
      */
@@ -76,8 +83,6 @@ trait SendUtils
     /**
      * Send document.
      *
-     * @deprecated Use sendMediafile().
-     *
      * @param string             $_caption
      * @param string             $_filename
      * @param Keyboard|null      $_reply_markup
@@ -86,6 +91,8 @@ trait SendUtils
      *
      * @return ServerResponse
      * @throws TelegramException
+     * @deprecated Use sendMediafile().
+     *
      */
     protected function sendDocument(
         string $_caption,
@@ -335,5 +342,26 @@ trait SendUtils
         });
 
         return $result;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * @param LoggerInterface $_logger
+     */
+    public function setSendUtilsLogger(LoggerInterface $_logger): void
+    {
+        $this->sendUtilsLogger = $_logger;
+    }
+
+    /**
+     * @return LoggerInterface
+     */
+    public function getSendUtilsLogger(): LoggerInterface
+    {
+        if ($this->sendUtilsLogger === null) {
+            $this->sendUtilsLogger = new NullLogger();
+        }
+        return $this->sendUtilsLogger;
     }
 }
