@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.15] - 2019-11-02
+### Added
+- Added the possibility to set a Psr\Log\LoggerInterface object for ConversationUtils.
+
 ## [1.1.14] - 2019-09-10
 ### Added
 - Added the method AdvancedSendUtils::deletePrevMsgData().

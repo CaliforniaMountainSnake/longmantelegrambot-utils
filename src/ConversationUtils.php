@@ -5,9 +5,15 @@ namespace CaliforniaMountainSnake\LongmanTelegrambotUtils;
 use Longman\TelegramBot\Conversation;
 use Longman\TelegramBot\Entities\User;
 use Longman\TelegramBot\Exception\TelegramException;
+use Psr\Log\LoggerInterface;
 
 trait ConversationUtils
 {
+    /**
+     * @var LoggerInterface
+     */
+    protected $conversationLogger;
+
     /**
      * Get command name.
      *
@@ -79,6 +85,10 @@ trait ConversationUtils
             $this->getConversation()->notes[$key] = $value;
         }
         $this->getConversation()->update();
+
+        if ($this->conversationLogger !== null) {
+            $this->conversationLogger->debug('Conversation notes have been set', $_notes_arr);
+        }
     }
 
     /**
@@ -94,6 +104,10 @@ trait ConversationUtils
             unset ($this->getConversation()->notes[$value]);
         }
         $this->getConversation()->update();
+
+        if ($this->conversationLogger !== null) {
+            $this->conversationLogger->debug('Conversation notes have been deleted', $_note_keys_arr);
+        }
     }
 
     /**
@@ -134,8 +148,12 @@ trait ConversationUtils
      */
     protected function startConversation(): void
     {
-        $this->setConversation(new Conversation ($this->getTelegramUser()->getId(), $this->getChatId(),
-            static::getCommandName()));
+        $conversationParams = [$this->getTelegramUser()->getId(), $this->getChatId(), static::getCommandName()];
+        $this->setConversation(new Conversation (...$conversationParams));
+
+        if ($this->conversationLogger !== null) {
+            $this->conversationLogger->debug('Conversation has been started', $conversationParams);
+        }
     }
 
     /**
@@ -146,5 +164,17 @@ trait ConversationUtils
         if ($this->getConversation() !== null) {
             $this->getConversation()->stop();
         }
+
+        if ($this->conversationLogger !== null) {
+            $this->conversationLogger->debug('Conversation has been stopped');
+        }
+    }
+
+    /**
+     * @param LoggerInterface $_logger
+     */
+    public function setConversationLogger(LoggerInterface $_logger): void
+    {
+        $this->conversationLogger = $_logger;
     }
 }
