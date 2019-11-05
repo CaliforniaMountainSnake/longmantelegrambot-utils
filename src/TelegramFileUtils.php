@@ -3,6 +3,7 @@
 namespace CaliforniaMountainSnake\LongmanTelegrambotUtils;
 
 use CaliforniaMountainSnake\LongmanTelegrambotUtils\Enums\TelegramMessageTypeEnum;
+use CaliforniaMountainSnake\LongmanTelegrambotUtils\Logger\TelegrambotUtilsLogger;
 use Longman\TelegramBot\Entities\File;
 use Longman\TelegramBot\Entities\Message;
 use Longman\TelegramBot\Exception\TelegramException;
@@ -13,6 +14,8 @@ use Longman\TelegramBot\Request;
  */
 trait TelegramFileUtils
 {
+    use TelegrambotUtilsLogger;
+
     /**
      * Download the file from message into the bot files directory.
      *

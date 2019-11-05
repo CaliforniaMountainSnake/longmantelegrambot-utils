@@ -3,6 +3,7 @@
 namespace CaliforniaMountainSnake\LongmanTelegrambotUtils;
 
 use CaliforniaMountainSnake\LongmanTelegrambotUtils\Enums\TelegramChatTypeEnum;
+use CaliforniaMountainSnake\LongmanTelegrambotUtils\Logger\TelegrambotUtilsLogger;
 use Longman\TelegramBot\Entities\Chat;
 use Longman\TelegramBot\Entities\Message;
 use Longman\TelegramBot\Entities\Update;
@@ -14,6 +15,8 @@ use Longman\TelegramBot\Entities\User;
  */
 trait TelegramUtils
 {
+    use TelegrambotUtilsLogger;
+    
     /**
      * Current message.
      *

@@ -4,6 +4,7 @@ namespace CaliforniaMountainSnake\LongmanTelegrambotUtils;
 
 use CaliforniaMountainSnake\LongmanTelegrambotUtils\Entities\Mediafile;
 use CaliforniaMountainSnake\LongmanTelegrambotUtils\Enums\TelegramMessageTypeEnum;
+use CaliforniaMountainSnake\LongmanTelegrambotUtils\Logger\TelegrambotUtilsLogger;
 use CaliforniaMountainSnake\SocialNetworksAPI\Telegram\Enums\ParseModeEnum;
 use CaliforniaMountainSnake\SocialNetworksAPI\Telegram\TelegramResponse;
 use Longman\TelegramBot\Entities\Keyboard;
@@ -13,6 +14,7 @@ use Longman\TelegramBot\Exception\TelegramException;
 
 trait AdvancedSendUtils
 {
+    use TelegrambotUtilsLogger;
     use SendUtils;
     use ConversationUtils;
 
@@ -32,8 +34,6 @@ trait AdvancedSendUtils
      * Send a text message or edit the existed one.
      * !!!Warning!!! Ensure you don't try update the message to the equaled one.
      *
-     * @deprecated Use showAnyMessage().
-     *
      * @param string             $_unique_conversation_note
      * @param string             $_text
      * @param array|null         $_errors
@@ -43,6 +43,8 @@ trait AdvancedSendUtils
      *
      * @return ServerResponse
      * @throws TelegramException
+     * @deprecated Use showAnyMessage().
+     *
      */
     protected function showTextMessage(
         string $_unique_conversation_note,

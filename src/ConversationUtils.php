@@ -2,21 +2,17 @@
 
 namespace CaliforniaMountainSnake\LongmanTelegrambotUtils;
 
+use CaliforniaMountainSnake\LongmanTelegrambotUtils\Logger\TelegrambotUtilsLogger;
 use Longman\TelegramBot\Conversation;
 use Longman\TelegramBot\Entities\User;
 use Longman\TelegramBot\Exception\TelegramException;
-use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 
 /**
  * Utils intended for the comfortable manipulating of the Conversation object.
  */
 trait ConversationUtils
 {
-    /**
-     * @var LoggerInterface
-     */
-    protected $conversationLogger;
+    use TelegrambotUtilsLogger;
 
     /**
      * Get command name.
@@ -90,7 +86,7 @@ trait ConversationUtils
         }
         $this->getConversation()->update();
 
-        $this->getConversationLogger()->info('Conversation notes have been set', $_notes_arr);
+        $this->getTelegrambotUtilsLogger()->info('Conversation notes have been set', $_notes_arr);
     }
 
     /**
@@ -107,7 +103,7 @@ trait ConversationUtils
         }
         $this->getConversation()->update();
 
-        $this->getConversationLogger()->info('Conversation notes have been deleted', $_note_keys_arr);
+        $this->getTelegrambotUtilsLogger()->info('Conversation notes have been deleted', $_note_keys_arr);
     }
 
     /**
@@ -120,7 +116,7 @@ trait ConversationUtils
     protected function getNote(string $_note)
     {
         $value = ($this->getConversation()->notes[$_note] ?? null);
-        $this->getConversationLogger()->debug('Conversation note returned', [$_note => $value]);
+        $this->getTelegrambotUtilsLogger()->debug('Conversation note returned', [$_note => $value]);
         return $value;
     }
 
@@ -132,7 +128,7 @@ trait ConversationUtils
     protected function getNotes(): array
     {
         $values = $this->getConversation()->notes;
-        $this->getConversationLogger()->debug('All conversation notes returned', $values ?? []);
+        $this->getTelegrambotUtilsLogger()->debug('All conversation notes returned', $values ?? []);
         return $values;
     }
 
@@ -154,7 +150,7 @@ trait ConversationUtils
         $conversationParams = [$this->getTelegramUser()->getId(), $this->getChatId(), static::getCommandName()];
         $this->setConversation(new Conversation (...$conversationParams));
 
-        $this->getConversationLogger()->info('Conversation has been started', $conversationParams);
+        $this->getTelegrambotUtilsLogger()->info('Conversation has been started', $conversationParams);
     }
 
     /**
@@ -165,27 +161,6 @@ trait ConversationUtils
         if ($this->getConversation() !== null) {
             $this->getConversation()->stop();
         }
-        $this->getConversationLogger()->info('Conversation has been stopped');
-    }
-
-    //------------------------------------------------------------------------------------------------------------------
-
-    /**
-     * @param LoggerInterface $_logger
-     */
-    public function setConversationLogger(LoggerInterface $_logger): void
-    {
-        $this->conversationLogger = $_logger;
-    }
-
-    /**
-     * @return LoggerInterface
-     */
-    public function getConversationLogger(): LoggerInterface
-    {
-        if ($this->conversationLogger === null) {
-            $this->conversationLogger = new NullLogger();
-        }
-        return $this->conversationLogger;
+        $this->getTelegrambotUtilsLogger()->info('Conversation has been stopped');
     }
 }

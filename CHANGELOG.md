@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.18] - 2019-11-05
+### Changed
+- The logger has been moved to the separate trait (This allows to initialize the logger without initializing the abstract methods of traits).
+
 ## [1.1.17] - 2019-11-02
 ### Fixed
 - Fixed a small bug in the ConversationUtils.

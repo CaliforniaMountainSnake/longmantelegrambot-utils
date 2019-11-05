@@ -3,6 +3,7 @@
 namespace CaliforniaMountainSnake\LongmanTelegrambotUtils;
 
 use CaliforniaMountainSnake\LongmanTelegrambotUtils\Entities\Mediafile;
+use CaliforniaMountainSnake\LongmanTelegrambotUtils\Logger\TelegrambotUtilsLogger;
 use CaliforniaMountainSnake\SocialNetworksAPI\Telegram\Enums\ParseModeEnum;
 use CaliforniaMountainSnake\SocialNetworksAPI\Telegram\Enums\TelegramInputMediaTypesEnum;
 use Longman\TelegramBot\Conversation;
@@ -10,18 +11,13 @@ use Longman\TelegramBot\Entities\Keyboard;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
 use Longman\TelegramBot\Request;
-use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 
 /**
  * Utils intended for the comfortable sending messages to Telegram chats.
  */
 trait SendUtils
 {
-    /**
-     * @var LoggerInterface
-     */
-    protected $sendUtilsLogger;
+    use TelegrambotUtilsLogger;
 
     /**
      * @return string
@@ -342,26 +338,5 @@ trait SendUtils
         });
 
         return $result;
-    }
-
-    //------------------------------------------------------------------------------------------------------------------
-
-    /**
-     * @param LoggerInterface $_logger
-     */
-    public function setSendUtilsLogger(LoggerInterface $_logger): void
-    {
-        $this->sendUtilsLogger = $_logger;
-    }
-
-    /**
-     * @return LoggerInterface
-     */
-    public function getSendUtilsLogger(): LoggerInterface
-    {
-        if ($this->sendUtilsLogger === null) {
-            $this->sendUtilsLogger = new NullLogger();
-        }
-        return $this->sendUtilsLogger;
     }
 }
