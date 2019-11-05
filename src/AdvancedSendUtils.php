@@ -78,10 +78,10 @@ trait AdvancedSendUtils
      * @param Keyboard|null      $_reply_markup
      * @param string|null        $_chat_id
      * @param ParseModeEnum|null $_parse_mode
+     * @param bool               $_is_force_del_and_send Always just delete old message and send a new one.
      *
      * @return ServerResponse
      * @throws TelegramException
-     * @throws \RuntimeException
      */
     protected function showAnyMessage(
         string $_unique_msg_token,
@@ -90,15 +90,21 @@ trait AdvancedSendUtils
         ?array $_errors = null,
         ?Keyboard $_reply_markup = null,
         ?string $_chat_id = null,
-        ?ParseModeEnum $_parse_mode = null
+        ?ParseModeEnum $_parse_mode = null,
+        bool $_is_force_del_and_send = false
     ): ServerResponse {
         $this->assertMessageParamsAreCompatible($_text, $_mediafile);
         $this->assertConversationIsStarted();
         $_mediafile !== null && $_parse_mode !== null && $_mediafile->setParseMode($_parse_mode);
         [$previousMsgId, $previousMsgType] = $this->getPrevMsgData($_unique_msg_token);
 
-        // Последнего сообщения не существует, просто отправляем.
-        if ($previousMsgId === null) {
+        // Удаляем сообщение, если задан флаг жесткого переудаления.
+        if ($previousMsgId !== null && $_is_force_del_and_send) {
+            $this->deleteMessage($previousMsgId, $_chat_id);
+        }
+
+        // Если последнего сообщения не существует или задан флаг жесткого переудаления, просто отправляем.
+        if ($previousMsgId === null || $_is_force_del_and_send) {
             // Отправляем текст.
             if ($_mediafile === null) {
                 return $this->updatePrevMsgData($_unique_msg_token,
@@ -136,6 +142,33 @@ trait AdvancedSendUtils
         // Текущее сообщение с медиафайлом.
         return $this->updatePrevMsgData($_unique_msg_token,
             $this->editMessageMedia($previousMsgId, $_mediafile, $_errors, $_reply_markup, $_chat_id));
+    }
+
+    /**
+     * Delete a previous message and send a new one.
+     *
+     * @param string             $_unique_msg_token
+     * @param string|null        $_text
+     * @param Mediafile|null     $_mediafile
+     * @param array|null         $_errors
+     * @param Keyboard|null      $_reply_markup
+     * @param string|null        $_chat_id
+     * @param ParseModeEnum|null $_parse_mode
+     *
+     * @return ServerResponse
+     * @throws TelegramException
+     */
+    protected function forceShowAnyMessage(
+        string $_unique_msg_token,
+        ?string $_text,
+        ?Mediafile $_mediafile = null,
+        ?array $_errors = null,
+        ?Keyboard $_reply_markup = null,
+        ?string $_chat_id = null,
+        ?ParseModeEnum $_parse_mode = null
+    ): ServerResponse {
+        return $this->showAnyMessage($_unique_msg_token, $_text, $_mediafile, $_errors, $_reply_markup, $_chat_id,
+            $_parse_mode, false);
     }
 
     //------------------------------------------------------------------------------------------------------------------
