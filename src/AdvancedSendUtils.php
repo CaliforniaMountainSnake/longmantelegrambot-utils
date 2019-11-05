@@ -168,7 +168,7 @@ trait AdvancedSendUtils
         ?ParseModeEnum $_parse_mode = null
     ): ServerResponse {
         return $this->showAnyMessage($_unique_msg_token, $_text, $_mediafile, $_errors, $_reply_markup, $_chat_id,
-            $_parse_mode, false);
+            $_parse_mode, true);
     }
 
     //------------------------------------------------------------------------------------------------------------------

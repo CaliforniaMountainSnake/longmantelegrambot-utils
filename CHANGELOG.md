@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.22] - 2019-11-05
+### Fixed
+- Fixed a bug with AdvancedSendUtils::forceShowAnyMessage().
+
 ## [1.1.21] - 2019-11-05
 ### Changed
 - Logging have been improved.
