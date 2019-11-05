@@ -73,7 +73,7 @@ trait SendUtils
         ];
         $_reply_markup !== null && $params['reply_markup'] = $_reply_markup;
 
-        return Request::sendMessage($params);
+        return $this->logAndReturnServerResponse(Request::sendMessage($params));
     }
 
     /**
@@ -132,7 +132,7 @@ trait SendUtils
         $_mediafile->getCaption() !== null && $params['caption'] = $_mediafile->getCaption();
         $_reply_markup !== null && $params['reply_markup'] = $_reply_markup;
 
-        return Request::send('send' . \ucfirst($type), $params);
+        return $this->logAndReturnServerResponse(Request::send('send' . \ucfirst($type), $params));
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -166,7 +166,7 @@ trait SendUtils
         ];
         $_reply_markup !== null && $params['reply_markup'] = $_reply_markup;
 
-        return Request::editMessageText($params);
+        return $this->logAndReturnServerResponse(Request::editMessageText($params));
     }
 
     /**
@@ -203,7 +203,7 @@ trait SendUtils
         ];
         $_reply_markup !== null && $params['reply_markup'] = $_reply_markup;
 
-        return Request::editMessageMedia($params);
+        return $this->logAndReturnServerResponse(Request::editMessageMedia($params));
     }
 
     /**
@@ -223,10 +223,10 @@ trait SendUtils
      */
     protected function deleteMessage(string $_message_id, ?string $_chat_id = null): ServerResponse
     {
-        return Request::deleteMessage([
+        return $this->logAndReturnServerResponse(Request::deleteMessage([
             'chat_id' => $_chat_id ?? $this->getChatId(),
             'message_id' => $_message_id,
-        ]);
+        ]));
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -253,7 +253,7 @@ trait SendUtils
             'text' => $_text
         ];
 
-        return Request::sendMessage($params);
+        return $this->logAndReturnServerResponse(Request::sendMessage($params));
     }
 
     /**
@@ -295,10 +295,10 @@ trait SendUtils
     protected function sendTypingAction(?string $_chat_id = null): ServerResponse
     {
         // Send typing action.
-        return Request::sendChatAction([
+        return $this->logAndReturnServerResponse(Request::sendChatAction([
             'chat_id' => $_chat_id ?? $this->getChatId(),
             'action' => 'typing',
-        ]);
+        ]));
     }
 
     /**
@@ -338,5 +338,21 @@ trait SendUtils
         });
 
         return $result;
+    }
+
+    /**
+     * @param ServerResponse $_response
+     *
+     * @return ServerResponse
+     */
+    protected function logAndReturnServerResponse(ServerResponse $_response): ServerResponse
+    {
+        $data = ['ServerResponse', $_response->getRawData()];
+        if (!$_response->isOk()) {
+            $this->getTelegrambotUtilsLogger()->warning(...$data);
+        }
+
+        $this->getTelegrambotUtilsLogger()->debug(...$data);
+        return $_response;
     }
 }
