@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.23] - 2019-11-10
+### Added
+- Added the support of conversation's groups. Now you can set notes for the specified group and delete the group (with all variables stored in it) later. This functionality can be helpful in the situations where you need to set same notes multiple times in the same conversation.
+### Changed
+- Composer dependencies have been updated.
+
 ## [1.1.22] - 2019-11-05
 ### Fixed
 - Fixed a bug with AdvancedSendUtils::forceShowAnyMessage().

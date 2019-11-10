@@ -49,6 +49,14 @@ trait ConversationUtils
     abstract protected function getChatId(): string;
 
     /**
+     * @return string
+     */
+    protected function getConversationGroupsNoteName(): string
+    {
+        return 'conversation_groups';
+    }
+
+    /**
      * @throws \RuntimeException
      */
     protected function assertConversationIsStarted(): void
@@ -75,60 +83,100 @@ trait ConversationUtils
     /**
      * Set permanent variables for the current conversation.
      *
-     * @param array $_notes_arr Array with notes.
+     * @param array       $_notes_arr  The array with notes.
+     * @param string|null $_group_name The name of conversation's group.
      *
      * @throws TelegramException
      */
-    protected function setConversationNotes(array $_notes_arr): void
+    protected function setConversationNotes(array $_notes_arr, ?string $_group_name = null): void
     {
         foreach ($_notes_arr as $key => $value) {
-            $this->getConversation()->notes[$key] = $value;
+            if ($_group_name !== null) {
+                $this->getConversation()->notes[$this->getConversationGroupsNoteName()][$_group_name][$key] = $value;
+            } else {
+                $this->getConversation()->notes[$key] = $value;
+            }
         }
         $this->getConversation()->update();
 
-        $this->getTelegrambotUtilsLogger()->info('Conversation notes have been set', $_notes_arr);
+        $this->getTelegrambotUtilsLogger()->info('Conversation notes have been set',
+            ['group_name' => $_group_name, 'notes' => $_notes_arr]);
     }
 
     /**
      * Unset permanent variables for the current conversation.
      *
-     * @param array $_note_keys_arr Array of the notes's KEYS.
+     * @param array       $_note_keys_arr Array of the notes's KEYS.
+     * @param string|null $_group_name    The name of conversation's group.
      *
      * @throws TelegramException
      */
-    protected function deleteConversationNotes(array $_note_keys_arr): void
+    protected function deleteConversationNotes(array $_note_keys_arr, ?string $_group_name = null): void
     {
         foreach ($_note_keys_arr as $value) {
-            unset ($this->getConversation()->notes[$value]);
+            if ($_group_name !== null) {
+                unset ($this->getConversation()->notes[$this->getConversationGroupsNoteName()][$_group_name][$value]);
+            } else {
+                unset ($this->getConversation()->notes[$value]);
+            }
         }
         $this->getConversation()->update();
 
-        $this->getTelegrambotUtilsLogger()->info('Conversation notes have been deleted', $_note_keys_arr);
+        $this->getTelegrambotUtilsLogger()->info('Conversation notes have been deleted',
+            ['group_name' => $_group_name, 'notes' => $_note_keys_arr]);
+    }
+
+    /**
+     * Unset all permanent variables for the given conversation group.
+     *
+     * @param string $_group_name The name of conversation's group.
+     */
+    protected function deleteConversationGroup(string $_group_name): void
+    {
+        unset ($this->getConversation()->notes[$this->getConversationGroupsNoteName()][$_group_name]);
+        $this->getTelegrambotUtilsLogger()->info('Conversation notes group has been deleted',
+            ['group_name' => $_group_name]);
     }
 
     /**
      * Get conversation note's value.
      *
-     * @param string $_note The key of the conversation->notes array.
+     * @param string      $_note       The key of the conversation->notes array.
+     * @param string|null $_group_name The name of conversation's group.
      *
      * @return mixed|null The value of a variable or null if it does not exists.
      */
-    protected function getNote(string $_note)
+    protected function getNote(string $_note, ?string $_group_name = null)
     {
-        $value = ($this->getConversation()->notes[$_note] ?? null);
-        $this->getTelegrambotUtilsLogger()->debug('Conversation note returned', [$_note => $value]);
+        if ($_group_name !== null) {
+            $value = ($this->getConversation()->notes[$this->getConversationGroupsNoteName()][$_group_name][$_note] ??
+                null);
+        } else {
+            $value = ($this->getConversation()->notes[$_note] ?? null);
+        }
+
+        $this->getTelegrambotUtilsLogger()->debug('Conversation note returned',
+            ['group_name' => $_group_name, $_note => $value]);
         return $value;
     }
 
     /**
      * Get all conversation's notes.
      *
+     * @param string|null $_group_name The name of conversation's group.
+     *
      * @return array
      */
-    protected function getNotes(): array
+    protected function getNotes(?string $_group_name = null): array
     {
-        $values = $this->getConversation()->notes;
-        $this->getTelegrambotUtilsLogger()->debug('All conversation notes returned', $values ?? []);
+        if ($_group_name !== null) {
+            $values = $this->getConversation()->notes[$this->getConversationGroupsNoteName()][$_group_name] ?? [];
+        } else {
+            $values = $this->getConversation()->notes ?? [];
+        }
+
+        $this->getTelegrambotUtilsLogger()->debug('All conversation notes returned',
+            ['group_name' => $_group_name, 'notes' => $values]);
         return $values;
     }
 
