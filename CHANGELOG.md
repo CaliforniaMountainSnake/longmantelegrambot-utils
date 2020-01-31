@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.24] - 2020-01-31
+### Added
+- Added the AdvancedConversationUtils trait.
+
 ## [1.1.23] - 2019-11-10
 ### Added
 - Added the support of conversation's groups. Now you can set notes for the specified group and delete the group (with all variables stored in it) later. This functionality can be helpful in the situations where you need to set same notes multiple times in the same conversation.
@@ -133,3 +137,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.0.0] - 2019-07-22
 ### Added
 - Added the useful traits to send messages, working with conversation and getting telegram parameters in any command.
+
+[1.1.24]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.23...1.1.24
+[1.1.23]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.22...1.1.23
+[1.1.22]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.21...1.1.22
+[1.1.21]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.20...1.1.21
+[1.1.20]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.19...1.1.20
+[1.1.19]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.18...1.1.19
+[1.1.18]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.17...1.1.18
+[1.1.17]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.16...1.1.17
+[1.1.16]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.15...1.1.16
+[1.1.15]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.14...1.1.15
+[1.1.14]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.13...1.1.14
+[1.1.13]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.12...1.1.13
+[1.1.12]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.11...1.1.12
+[1.1.11]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.10...1.1.11
+[1.1.10]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.9...1.1.10
+[1.1.9]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.8...1.1.9
+[1.1.8]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.7...1.1.8
+[1.1.7]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.6...1.1.7
+[1.1.6]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.5...1.1.6
+[1.1.5]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.4...1.1.5
+[1.1.4]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.3...1.1.4
+[1.1.3]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.2...1.1.3
+[1.1.2]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.1...1.1.2
+[1.1.1]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.1.0...1.1.1
+[1.1.0]: https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils/compare/1.0.0...1.1.0
